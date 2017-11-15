@@ -1,0 +1,9 @@
+[
+    {"url": "/leads", "name": "Сделки", "icon": "icon-cup"},
+    {"url": "/contacts", "name": "Контакты", "icon": "icon-people"},
+    {"name": "CRM"},
+    {"url": "/statuses", "name": "Статусы сделок", "icon": "icon-flag"},
+    {"url": "/settings", "name": "Настройки", "icon": "icon-settings"},
+    {"name": "Пользователь"},
+    {"url": "/settings2", "name": "Аккаунт", "icon": "icon-user"}
+]

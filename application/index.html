@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Зазрузка...</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.31/css/uikit.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.css">
+</head>
+<body>
+    <div id="app" class="wrapper">
+        <sidebar v-if="this.$route.meta.requiredAuth"></sidebar>
+        <router-view></router-view>
+    </div>
+    <script src="/dist/build.js"></script>
+    <style>
+        * {
+            box-sizing: border-box
+        }
+
+        html,
+        body,
+        .wrapper {
+            height: 100%
+        }
+
+        main {
+            margin-left: 240px;
+            padding: 40px;
+            padding-bottom: 60px;
+            min-height: 100%;
+            position: relative
+        }
+
+        main.no-sidebar {
+            margin-left: 0
+        }
+
+        main header {
+            margin: -40px -40px 40px;
+            padding: 30px 40px 0;
+            border-top: 1px solid transparent;
+            border-bottom: 1px solid #E5E5E5;
+            box-shadow: 0 5px 19px 0 rgba(0, 0, 0, 0.1)
+        }
+
+        main footer {
+            color: rgba(0, 0, 0, 0.5);
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 60px;
+            line-height: 60px;
+            padding: 0 40px;
+            background: linear-gradient(to top, #fff, #fff 90%, rgba(255, 255, 255, 0))
+        }
+
+        main footer p {
+            margin: 0;
+        }
+
+        main footer a {
+            color: inherit
+        }
+        .uk-button, .uk-checkbox, .uk-select, .uk-input, .uk-textarea {
+            border-radius: 4px;
+        }
+    </style>
+</body>
+</html>
