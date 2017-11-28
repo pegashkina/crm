@@ -10,7 +10,15 @@
                         <template v-for="el in fields">
                             <div class="uk-margin-small">
                                 <label class="uk-form-label">{{el.name}}</label>
-                                <input v-if="el.type != 'tel' && el.type != 'desc'" :type="el.type" class="uk-input" v-model="form[el.model]">
+                                <input v-if="el.type != 'tel' && el.type != 'desc' && el.type != 'select'" :type="el.type" class="uk-input" v-model="form[el.model]">
+                                <select class="uk-select" v-else-if="el.type == 'select'" v-model="form[el.model]">
+                                    <template v-if="el.model == 'status'">
+                                        <option v-for="status in statuses" :value="status._id">{{status.title}}</option>
+                                    </template>
+                                    <template v-if="el.model == 'contactsId'">
+                                        <option v-for="contact in contacts" :value="contact._id">{{contact.name}}</option>
+                                    </template>
+                                </select>
                                 <textarea v-else-if="el.type == 'desc'" class="uk-textarea" v-model="form[el.model]"></textarea>
                                 <masked-input v-else :type="el.type" class="uk-input" v-model="form[el.model]" mask="\+\7 (111) 111-1111" />
                             </div>
@@ -40,6 +48,12 @@
             fields: {
                 type: Array,
                 required: true
+            },
+            statuses: {
+                type: Array
+            },
+            contacts: {
+                type: Array
             }
         },
         data: () => ({
@@ -48,7 +62,6 @@
         }),
         methods: {
             addEl: function () {
-                this.form.manager = this.$cookie.get('user');
                 this.$http.post(`${this.$APIURL}/api/v1/${this.type}/add`, this.form, {
                     headers: { 'Authorization': `Bearer ${this.$cookie.get('token')}`}
                 }).then(function(r) {

@@ -6,11 +6,13 @@
                     title="Добавление сделки"
                     type="lead"
                     :fields="editorFields"
+                    :statuses="statuses"
+                    :contacts="contacts"
                     @saved="getTable">Добавить сделку</table-create>
             <vtable ref="table"
                     trackBy="id"
                     :fields="tableHead"
-                    :rows="sortedRows"
+                    :rows="rendered"
                     :selectedRows="selectedRows"
                     :selectable="true"
                     :condensed="true"
@@ -41,7 +43,9 @@
                     @edited="getTable"
                     title="Редактирование сделки"
                     type="lead"
-                    :fields="editorFields"/>
+                    :fields="editorFields"
+                    :statuses="statuses"
+                    :contacts="contacts"/>
         </template>
         <template v-if="tableBody.length == 0 && dataLoaded">
             <div class="uk-alert">
@@ -96,20 +100,24 @@
                 header: 'Название',
                 pickable: {linkTo: 'lead'}
             }, {
-                name: 'status',
+                name: 'statusR',
                 sortBy: true,
                 header: 'Статус'
             }, {
-                name: 'contactsId',
+                name: 'contactsIdR',
                 sortBy: false,
                 header: 'Контакт'
             }],
             tableBody: [],
             selectedRows: [],
             editorFields: [
-                { name: 'Название', type: 'text',  model: 'title'      },
-                { name: 'Описание', type: 'desc',  model: 'description' }
-            ]
+                { name: 'Название', type: 'text',   model: 'title'       },
+                { name: 'Описание', type: 'desc',   model: 'description' },
+                { name: 'Контакты', type: 'select', model: 'contactsId'    },
+                { name: 'Статус',   type: 'select', model: 'status'      }
+            ],
+            statuses: [],
+            contacts: []
         }),
         methods: {
             getTable: function() {
@@ -131,11 +139,27 @@
                         return this.tableBody[i];
                     }
                 }
+            },
+            getStatus: function () {
+                this.$http.get(`${this.$APIURL}/api/v1/status/get`, {
+                    headers: { 'Authorization': `Bearer ${this.$cookie.get('token')}`}
+                }).then(function(r) {
+                    this.statuses = r.body;
+                }).catch(console.error);
+            },
+            getContacts: function () {
+                this.$http.get(`${this.$APIURL}/api/v1/contact/get`, {
+                    headers: { 'Authorization': `Bearer ${this.$cookie.get('token')}`}
+                }).then(function(r) {
+                    this.contacts = r.body;
+                }).catch(console.error);
             }
         },
         created: function() {
             this.title = this.$route.meta.title;
             this.getTable();
+            this.getStatus();
+            this.getContacts();
         },
         computed: {
             sortedRows () {
@@ -145,6 +169,25 @@
                 const by = Object.keys(this.sortOrder)[0]
                 const dir = this.sortOrder[by]
                 return orderBy(this.tableBody, [item => item[by]], dir)
+            },
+            rendered () {
+                const by = Object.keys(this.sortOrder)[0]
+                const dir = this.sortOrder[by]
+                var tableBody = orderBy(this.tableBody, [item => item[by]], dir)
+                for (var key in tableBody) {
+                    tableBody[key].id = tableBody[key]._id;
+                    for (var key2 in this.statuses) {
+                        if (tableBody[key].status == this.statuses[key2]._id) {
+                            tableBody[key].statusR = this.statuses[key2].title;
+                        }
+                    }
+                    for (var key2 in this.contacts) {
+                        if (tableBody[key].contactsId == this.contacts[key2]._id) {
+                            tableBody[key].contactsIdR = this.contacts[key2].name;
+                        }
+                    }
+                }
+                return tableBody;
             }
         }
     }

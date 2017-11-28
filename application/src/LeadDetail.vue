@@ -5,9 +5,11 @@
             <dt>Описание</dt>
             <dd v-html="this.$options.filters.n2br(details.description)"></dd>
             <dt>Статус</dt>
-            <dd>{{details.status}}</dd>
+            <dd><span class="uk-badge" :style="'color: #333; background: ' + statuses.color">{{statuses.title}}</span></dd>
             <dt>Контакты</dt>
-            <dd>{{details.contactsId}}</dd>
+            <dd><router-link :to="'/contacts/' + contacts._id">{{contacts.name}}</router-link><br>
+                {{contacts.tel}}
+            </dd>
             <dt>Менеджер-создатель</dt>
             <dd><get-info v-if="!!details._id" :managerId="details.manager" /></dd>
         </dl>
@@ -32,7 +34,9 @@
         data: function() {
             return {
                 title: '',
-                details: {}
+                details: {},
+                statuses: {},
+                contacts: {}
             }
         },
         methods: {
@@ -43,7 +47,25 @@
                 }).then(function(r) {
                     this.details = r.body;
                     this.title = this.details.title;
+                    this.getStatus(this.details.status);
+                    this.getContacts(this.details.contactsId);
                 }, console.log);
+            },
+            getStatus: function (a) {
+                this.$http.get(`${this.$APIURL}/api/v1/status/get`, {
+                    headers: { 'Authorization': `Bearer ${this.$cookie.get('token')}`},
+                    params: { id: a }
+                }).then(function(r) {
+                    this.statuses = r.body;
+                }).catch(console.error);
+            },
+            getContacts: function (a) {
+                this.$http.get(`${this.$APIURL}/api/v1/contact/get`, {
+                    headers: { 'Authorization': `Bearer ${this.$cookie.get('token')}`},
+                    params: { id: a }
+                }).then(function(r) {
+                    this.contacts = r.body;
+                }).catch(console.error);
             }
         },
         created: function() {

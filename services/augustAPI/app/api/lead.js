@@ -24,8 +24,11 @@ api.addLead = (Lead, AugustToken) => (req, res) => {
         const newLead = new Lead({
             manager: req.user._id,
             title: req.body.title,
-            description: req.body.description
+            description: req.body.description,
+            status: req.body.status,
+            contactsId: req.body.contactsId
         });
+        console.log(newLead);
         newLead.save((error) => {
             if (error) return res.status(400).json({ success: false, message:  'Некоторые поля не были заполнены' });
             res.json({ success: true, message: 'Сделка успешно сохранена' });
@@ -34,11 +37,15 @@ api.addLead = (Lead, AugustToken) => (req, res) => {
 };
 
 api.editLead = (Lead, AugustToken) => (req, res) => {
+
+    console.log(req.body);
     if (AugustToken) {
         Lead.update({ _id: req.query.id }, {
             manager: req.user._id,
             title: req.body.title,
             description: req.body.description,
+            status: req.body.status,
+            contactsId: req.body.contactsId,
             dateEdit: Date.now()
         },(error) => {
             if (error) return res.status(400).json({ success: false, message:  'Некоторые поля не были заполнены' });
