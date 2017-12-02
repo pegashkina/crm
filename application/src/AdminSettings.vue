@@ -71,13 +71,9 @@
                 }
             },
             sortOrder: {
-                username: 'asc'
+                lastName: 'asc'
             },
             tableHead: [{
-                name: 'username',
-                sortBy: true,
-                header: 'Логин'
-            },{
                 name: 'firstName',
                 sortBy: true,
                 header: 'Имя'

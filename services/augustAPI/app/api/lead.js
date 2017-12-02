@@ -26,6 +26,7 @@ api.addLead = (Lead, AugustToken) => (req, res) => {
             title: req.body.title,
             description: req.body.description,
             status: req.body.status,
+            comment: req.body.comment,
             contactsId: req.body.contactsId
         });
         console.log(newLead);
@@ -45,6 +46,7 @@ api.editLead = (Lead, AugustToken) => (req, res) => {
             title: req.body.title,
             description: req.body.description,
             status: req.body.status,
+            comment: req.body.comment,
             contactsId: req.body.contactsId,
             dateEdit: Date.now()
         },(error) => {

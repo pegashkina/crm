@@ -26,6 +26,9 @@ const Schema = mongoose.Schema({
     },
     city: {
         type: String
+    },
+    comment: {
+        type: String
     }
 });
 

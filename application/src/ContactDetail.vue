@@ -10,6 +10,8 @@
             <dd>{{details.city}}</dd>
             <dt>Менеджер-создатель</dt>
             <dd><get-info v-if="!!details._id" :managerId="details.manager" /></dd>
+            <dt>Комментарий</dt>
+            <dd v-html="this.$options.filters.n2br(details.comment)"></dd>
         </dl>
         <vfooter></vfooter>
     </main>
@@ -21,6 +23,13 @@
     export default {
         components: {
             getInfo: getInfo
+        },
+        filters: {
+            n2br: function (value) {
+                if (!value) return ''
+                value = value.toString()
+                return value.replace('\n', '<br>')
+            }
         },
         data: function() {
             return {

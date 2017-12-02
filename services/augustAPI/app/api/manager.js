@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const api = {};
 
-api.getUser = (Manager, AugustToken) => (req, res) => {
+api.getUser = (User, Manager, AugustToken) => (req, res) => {
     const token = AugustToken;
     if (token) {
         if (req.query.id) {
@@ -16,6 +16,7 @@ api.getUser = (Manager, AugustToken) => (req, res) => {
             Manager.find({}, (error, users) => {
                 if (error) throw error;
                 res.status(200).json(users);
+                
             });
         }
     } else return res.status(403).send({ success: false, message: 'Unauthorized' });

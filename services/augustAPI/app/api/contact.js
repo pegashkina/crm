@@ -25,6 +25,7 @@ api.addContact = (Contact, AugustToken) => (req, res) => {
             name: req.body.name,
             tel: req.body.tel,
             email: req.body.email,
+            comment: req.body.comment,
             city: req.body.city
         });
         newContact.save((error) => {
@@ -41,6 +42,7 @@ api.editContact = (Contact, AugustToken) => (req, res) => {
             name: req.body.name,
             tel: req.body.tel,
             email: req.body.email,
+            comment: req.body.comment,
             city: req.body.city,
             dateEdit: Date.now()
         },(error) => {

@@ -95,6 +95,10 @@
                 name: 'tel',
                 sortBy: true,
                 header: 'Телефон'
+            }, {
+                name: 'email',
+                sortBy: true,
+                header: 'Email'
             }],
             tableBody: [],
             selectedRows: [],
@@ -102,7 +106,8 @@
                 { name: 'ФИО',     type: 'text',  model: 'name'  },
                 { name: 'Адрес',   type: 'text',  model: 'city'  },
                 { name: 'Телефон', type: 'tel',   model: 'tel'   },
-                { name: 'Email',   type: 'email', model: 'email' }
+                { name: 'Email',   type: 'email', model: 'email' },
+                { name: 'Комментарий', type: 'desc',   model: 'comment'   }
             ]
         }),
         methods: {

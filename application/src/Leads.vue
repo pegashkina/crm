@@ -113,8 +113,9 @@
             editorFields: [
                 { name: 'Название', type: 'text',   model: 'title'       },
                 { name: 'Описание', type: 'desc',   model: 'description' },
-                { name: 'Контакты', type: 'select', model: 'contactsId'    },
-                { name: 'Статус',   type: 'select', model: 'status'      }
+                { name: 'Контакты', type: 'select', model: 'contactsId'  },
+                { name: 'Статус',   type: 'select', model: 'status'      },
+                { name: 'Комментарий', type: 'desc',   model: 'comment'  }
             ],
             statuses: [],
             contacts: []

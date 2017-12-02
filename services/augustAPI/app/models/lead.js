@@ -28,6 +28,9 @@ const Schema = mongoose.Schema({
     status: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Statuses'
+    },
+    comment: {
+        type: String
     }
 });
 
