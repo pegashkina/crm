@@ -24,16 +24,21 @@ export default {
         }</td>
       )}
       { parent.fieldsDef.map((field, index) => {
-        if (field.pickable) {
-          let rrr = {name: field.pickable.linkTo, params: {id: props.row.id}}
-          return <td class={ field.cellClass }>
-            <router-link to={rrr}>{props.row[field.name]}</router-link>
-          </td>
-        } else {
-          return <td class={field.cellClass}>
-              {h(Field, {props: {row: props.row, field}})}
-          </td>
-        }
+          if (field.name != 'color') {
+              if (field.pickable) {
+                  let rrr = {name: field.pickable.linkTo, params: {id: props.row.id}}
+                  return <td class={ field.cellClass }>
+              <router-link to={rrr}>{props.row[field.name]}</router-link>
+                  </td>
+              } else {
+                  return <td class={field.cellClass}>
+                  {h(Field, {props: {row: props.row, field}})}
+              </td>
+              }
+          } else {
+              return <td class={field.cellClass}><span class="uk-badge" style={"background: " + h(Field, {props: {row: props.row, field}})}></span>
+                  </td>
+          }
       })}
     </tr>
   }

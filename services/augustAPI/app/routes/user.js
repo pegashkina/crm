@@ -4,5 +4,5 @@ module.exports = (app) => {
     app.route('/')
         .get((req, res) => res.send('Hello API'));
     app.route('/api/v1/auth')
-        .post(api.login(models.User));
+        .post(api.login(models.User, models.Manager));
 }

@@ -95,7 +95,7 @@
                 sortBy: true,
                 header: 'Название'
             }, {
-                name: 'status',
+                name: 'color',
                 sortBy: true,
                 header: 'Цвет'
             }],
