@@ -39,7 +39,6 @@ api.addLead = (Lead, AugustToken) => (req, res) => {
 
 api.editLead = (Lead, AugustToken) => (req, res) => {
 
-    console.log(req.body);
     if (AugustToken) {
         Lead.update({ _id: req.query.id }, {
             manager: req.user._id,

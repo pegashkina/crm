@@ -59,6 +59,7 @@
             tableEdit: tableEdit
         },
         data: () => ({
+            openEditor: '',
             events: {
                 sort: {
                     emited: false
@@ -94,7 +95,7 @@
             selectedRows: [],
             editorFields: [
                 { name: 'Логин',   type: 'text',  model: 'username' },
-                { name: 'Пароль',  type: 'text',  model: 'password'  },
+                { name: 'Пароль (Оставьте пустым, чтобы не менять)',  type: 'text',  model: 'password'  },
                 { name: 'Имя',     type: 'text',  model: 'firstName' },
                 { name: 'Фамилия', type: 'text',  model: 'lastName'  },
                 { name: 'Телефон', type: 'tel',   model: 'tel'   },
@@ -128,6 +129,9 @@
         },
         computed: {
             sortedRows () {
+                for (var key in this.tableBody) {
+                    this.tableBody[key].id = this.tableBody[key]._id;
+                }
                 const by = Object.keys(this.sortOrder)[0]
                 const dir = this.sortOrder[by]
                 return orderBy(this.tableBody, [item => item[by]], dir)

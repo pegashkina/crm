@@ -13,13 +13,27 @@ const Schema = mongoose.Schema({
     }
 });
 
+Schema.pre('update', function (next) {
+    const user = this;
+
+    bcrypt.genSalt(10, (error, salt) => {
+        if (error) return next(error);
+        console.log(user)
+        bcrypt.hash(user._update.$set.password, salt, (error, hash) => {
+            if (error) return next(error);
+            user._update.$set.password = hash;
+            next();
+        });
+    });
+});
+
 Schema.pre('save', function (next) {
     const user = this;
     if (this.isModified('password') || this.isNew) {
         bcrypt.genSalt(10, (error, salt) => {
             if (error) return next(error);
-        bcrypt.hash(user.password, salt, (error, hash) => {
-            if (error) return next(error);
+            bcrypt.hash(user.password, salt, (error, hash) => {
+                if (error) return next(error);
                 user.password = hash;
                 next();
             });
